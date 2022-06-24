@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!
+{% endblock %}
+
+{% block content %}
+	<h1 class="border-green-400 border-solid border-b-4 text-3xl mb-4">Tableau de bords</h1>
+	{% include 'components/flash-errors.html.twig' %}
+	{% include 'components/flash-success.html.twig' %}
+
+	<div class="grid gap-4 grid-cols-3">
+		<a href="{{ path('restaurant-my') }}" class="bg-gray-100 p-6 rounded-lg shadow">
+			<h3 class="tracking-widest text-indigo-500 text-lg font-medium title-font">Mes restaurants</h3>
+		</a>
+		<a href="{{ path('restaurant-create') }}" class="bg-gray-100 p-6 rounded-lg shadow">
+			<h3 class="tracking-widest text-indigo-500 text-lg font-medium title-font">Ajouter un restaurant</h3>
+		</a>
+		<a href="{{ path('restaurant-list') }}" class="bg-gray-100 p-6 rounded-lg shadow">
+			<h3 class="tracking-widest text-indigo-500 text-lg font-medium title-font">Tous les restaurants</h3>
+		</a>
+		<a href="" class="bg-gray-100 p-6 rounded-lg shadow">
+			<h3 class="tracking-widest text-indigo-500 text-lg font-medium title-font">Tous les utilisateurs</h3>
+		</a>
+	</div>
+
+{% endblock %}

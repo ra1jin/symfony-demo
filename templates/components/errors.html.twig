@@ -1,0 +1,8 @@
+{% if (errors is defined) %}
+	{% for error in errors %}
+		<div class="flex items-center bg-red-400 p-4 mb-2 text-white">
+			<span class="flex-1">{{ error.message }}</span>
+			<button class="text-center p-1 rounded bg-red-500 text-white hover:bg-red-dark uppercase text-sm ml-3" onclick="this.parentNode.remove()">Fermer</button>
+		</div>
+	{% endfor %}
+{% endif %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block content %}
+	<h1 class="border-green-400 border-solid border-b-4 text-3xl mb-4">{{ title }}</h1>
+	{% include 'components/flash-errors.html.twig' %}
+	{% include 'components/flash-success.html.twig' %}
+
+	<div class="grid gap-4 grid-cols-3">
+		{% for restaurant in restaurants %}
+			<div class="bg-gray-100 p-6 rounded-lg">
+				<img class="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/720x400" alt="content">
+				<a href="{{ path('restaurant-view', {'id': restaurant.id}) }}" class="text-lg text-gray-900 font-medium title-font mb-4">{{ restaurant.name }}</a>
+				<p class="leading-relaxed text-base">{{ restaurant.description|slice(0, 30)|trim }}...</p>
+				{% if (restaurant.manager == app.user or is_granted('ROLE_ADMIN')) %}
+					<a href="{{ path('restaurant-edit', {'id': restaurant.id}) }}" class="block text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1">Editer</a>
+					<form action="{{ path('restaurant-delete', {'id': restaurant.id}) }}" method="DELETE" class="block">
+						<button class="block w-full text-center py-3 rounded bg-red-400 text-white hover:bg-green-dark focus:outline-none my-1">Supprimer</button>
+					</form>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

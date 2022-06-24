@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block content %}
+	<div class="bg-grey-lighter flex flex-col">
+		<div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+			<div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+				<h1 class="mb-8 text-3xl text-center">Inscription</h1>
+				<form method="post" autocomplete="false">
+					{% include 'components/flash-errors.html.twig' %}
+					{% include 'components/flash-success.html.twig' %}
+					{% include 'components/errors.html.twig' %}
+
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<div class="mb-2">
+						<input name="firstname" type="text" class="block border border-grey-light w-full p-3 rounded" placeholder="Prénom"/>
+					</div>
+					<div class="mb-2">
+						<input name="lastname" type="text" class="block border border-grey-light w-full p-3 rounded" placeholder="Nom"/>
+					</div>
+					<div class="mb-2">
+						<input name="email" type="text" class="block border border-grey-light w-full p-3 rounded" placeholder="Email"/>
+					</div>
+					<div class="mb-2">
+						<input name="password" type="password" class="block border border-grey-light w-full p-3 rounded" placeholder="Mot de passe"/>
+					</div>
+					<div class="mb-2">
+						<input name="password_confirm" type="password" class="block border border-grey-light w-full p-3 rounded" placeholder="Confirmation du mot de passe"/>
+					</div>
+					<div class="mb-2">
+						<input name="zipcode" type="zipcode" class="block border border-grey-light w-full p-3 rounded" placeholder="Code postal" autocomplete="randomString">
+					</div>
+					<div class="mb-2">
+						<input name="cityname" type="city" class="block border border-grey-light w-full p-3 rounded" placeholder="Ville" autocomplete="randomString">
+					</div>
+					<div class="mb-2 text-center">
+						<span class="text-gray-700 block mb-2">Quel est votre status</span>
+						<label class="inline-flex items-center">
+							<input name="role" type="radio" class="form-radio" value="MANAGER">
+							<span class="ml-2">Un restaurateur</span>
+						</label>
+						<label class="inline-flex items-center ml-6">
+							<input name="role" type="radio" class="form-radio" value="CLIENT">
+							<span class="ml-2">Un client</span>
+						</label>
+					</div>
+					<button type="submit" class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1">S'inscrire</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+
+</script>
+{% endblock %}

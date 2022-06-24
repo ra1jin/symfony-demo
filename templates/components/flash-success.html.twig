@@ -1,0 +1,6 @@
+{% for message in app.flashes('success') %}
+	<div class="flex items-center bg-green-400 p-4 mb-2 text-white">
+		<span class="flex-1">{{ message }}</span>
+		<button class="text-center p-1 rounded bg-green-500 text-white hover:bg-green-dark uppercase text-sm ml-3" onclick="this.parentNode.remove()">Fermer</button>
+	</div>
+{% endfor %}

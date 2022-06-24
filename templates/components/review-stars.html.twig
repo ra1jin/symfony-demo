@@ -1,0 +1,9 @@
+<div class="flex">
+    {% for i in 1..5 %}
+        {% if i <= rating %}
+            <span>★</span>
+        {% else %}
+            <span>☆</span>
+        {% endif %}
+    {% endfor %}
+</div>

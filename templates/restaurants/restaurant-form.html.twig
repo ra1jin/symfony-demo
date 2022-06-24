@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block content %}
+	<div class="flex justify-between items-center mb-4 bg-blue-500 p-4 shadow-md rounded">
+		<h1 class="text-xl text-center text-white">{{ restaurant is defined ? 'Édition' : 'Création' }}
+			d'un restaurant</h1>
+		<a href="{{ path('dashboard') }}" class="bg-blue bg-blue-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Retour au tableau de bord</a>
+	</div>
+
+	{% if(restaurant is defined) %}
+		<form action="{{ path('restaurant-edit', {'id': restaurant.id}) }}" method="POST" enctype="multipart/form-data">
+			{% include 'components/errors.html.twig' %}
+			<input name="name" value="{{ restaurant.name }}" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Nom"/>
+			<input name="description" value="{{ restaurant.description }}" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Description"/>
+			<input name="zipcode" value="{{ restaurant.city.zipcode }}" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Code postal"/>
+			<input name="cityname" value="{{ restaurant.city.name }}" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Ville"/>
+			<div class="flex mb-2 justify-end">
+				{% for picture in restaurant.restaurantPictures %}
+					<div id="picture-{{ picture.id }}" class="relative w-16 h-16 bg-contain" style="background-image:url(/uploads/{{ picture.file }})">
+						<button type="button" data-id="{{ picture.id }}" class="absolute w-5 p-1 rounded bg-blue-400 hover:bg-blue-600" onclick="onDeleteButtonClicked(this)" style="right:5px; top:5px;">
+							<img src="/images/delete-icon.svg">
+						</button>
+					</div>
+				{% endfor %}
+			</div>
+			<input name="pictures[]" type="file" class="block border border-grey-light w-full p-3 rounded mb-5" multiple>
+			<button type="submit" class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1">Valider</button>
+		</form>
+	{% else %}
+		<form action="{{ path('restaurant-create') }}" method="POST" enctype="multipart/form-data">
+			{% include 'components/errors.html.twig' %}
+			<input name="name" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Nom"/>
+			<input name="description" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Description"/>
+			<input name="zipcode" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Code postal"/>
+			<input name="cityname" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Ville"/>
+			<input name="pictures[]" type="file" class="block border border-grey-light w-full p-3 rounded mb-5" multiple>
+			<button type="submit" class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1">Valider</button>
+		</form>
+	{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+<script>
+	function onDeleteButtonClicked(btn) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('DELETE', '/restaurant-picture/delete/' + btn.dataset.id, true);
+		xhr.onload = function () {
+			if (xhr.readyState == 4 && xhr.status == "200") {
+				var picture = document.getElementById('picture-' + btn.dataset.id);
+				picture.remove();
+			}
+		}
+		xhr.send(null);
+	}
+</script>
+{% endblock %}

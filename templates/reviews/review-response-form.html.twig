@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block content %}
+	<div class="flex justify-between items-center mb-4 bg-blue-500 p-4 shadow-md rounded">
+		<h1 class="text-xl text-center text-white">Réponse à un avis sur votre restaurant</h1>
+		<a href="{{ path('restaurant-view', {'id': parent.restaurant.id}) }}" class="bg-blue bg-blue-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Retour</a>
+	</div>
+	<div class="bg-gray-100 p-3 mb-4">
+		<div class="flex justify-between">
+			<h3 class="text-gray-900 text-lg title-font font-medium">{{ parent.author.firstName }}</h3>
+			{% include 'components/review-stars.html.twig' with {'rating': parent.rating} %}
+		</div>
+		<p class="leading-relaxed text-base">{{ parent.message }}</p>
+	</div>
+	{% if response is defined %}
+		<form action="{{ path('review-edit-response', {'id': response.id}) }}" method="POST">
+			{% include 'components/errors.html.twig' %}
+			<input name="message" value="{{ response.message }}" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Message"/>
+			<button type="submit" class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1">Valider</button>
+		</form>
+	{% else %}
+		<form action="{{ path('review-create-response', {'id': parent.id}) }}" method="POST">
+			{% include 'components/errors.html.twig' %}
+			<input name="message" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Message"/>
+			<button type="submit" class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1">Valider</button>
+		</form>
+	{% endif %}
+{% endblock %}

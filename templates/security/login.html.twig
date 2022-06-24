@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+	<div class="bg-grey-lighter flex flex-col">
+		<div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+			<div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+				<h1 class="mb-8 text-3xl text-center">Connexion</h1>
+
+				<form method="post">
+					{% if error %}
+						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
+
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<input type="text" class="block border border-grey-light w-full p-3 rounded mb-5" name="email" placeholder="Email"/>
+					<input type="password" class="block border border-grey-light w-full p-3 rounded mb-5" name="password" placeholder="Mot de passe"/>
+					<button type="submit" class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark  focus:outline-none my-1">Se connecter</button>
+				</form>
+			</div>
+		</div>
+  </div>
+{% endblock %}

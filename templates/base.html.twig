@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link href="/stylesheets/tailwind.min.css" rel="stylesheet">
+		<link href="/stylesheets/styles.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		{% block stylesheets %}{% endblock %}
+	</head>
+	<body>
+		<!-- navbar -->
+		<div class="bg-blue-400 mb-4">
+			<div class="my-container">
+				<div class="flex py-2 justify-between text-white items-center">
+					<a href="{{ path('home') }}">Resto</a>
+					<form action="{{ path('restaurant-search') }}" method="GET" class="flex-1 ml-5">
+						<input type="text" class="bg-blue-500 text-white placeholder-blue-100 p-1 rounded w-full" name="zipcode" placeholder="Code postale"/>
+					</form>
+					<div class="flex">
+						{% if app.user %}
+							<div class="my-dropdown inline-block relative">
+								<a href="{{ path('dashboard') }}" class="flex items-center ml-5">
+									<span>{{ app.user.email }}</span>
+									<svg class="fill-current h-4 w-4 ml-1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+								</a>
+								<ul class="my-dropdown-menu absolute hidden text-gray-700 pt-1 shadow-lg">
+									<li>
+										<a href="#" class="bg-white rounded-t hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap">Mes restaurants</a>
+									</li>
+									<li>
+										<a href="{{ path('restaurant-create') }}" class="bg-white hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap">Ajouter un restaurant</a>
+									</li>
+									<li>
+										<a href="{{ path('restaurant-list') }}" class="bg-white rounded-b hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap">Tous les restaurants</a>
+									</li>
+									<li>
+										<a href="#" class="bg-white rounded-b hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap">Tous les utilisateurs</a>
+									</li>
+								</ul>
+							</div>
+							<a href="{{ path('app_logout') }}" class="ml-5">Déconnexion</a>
+						{% else %}
+							<a href="{{ path('app_login') }}" class="ml-5">Se connecter</a>
+							<a href="{{ path('app_subscribe') }}" class="ml-5">S'inscrire</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- navbar -->
+		<div class="my-container"> {% block content %}{% endblock %}
+			</div>
+		</body>
+	</html>
+</div>
+{% block javascripts %}{% endblock %}</body></html>

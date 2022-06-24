@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block content %}
+	<div class="flex justify-between items-center mb-4 bg-blue-500 p-4 shadow-md rounded">
+		<h1 class="text-xl text-center text-white">{{ review is defined ? 'Édition' : 'Ajout' }} d'un avis sur le restaurant {{ restaurant.name }}</h1>
+		<a href="{{ path('restaurant-view', {'id': restaurant.id}) }}" class="bg-blue bg-blue-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Retour</a>
+	</div>
+
+	{% if(review is defined) %}
+		<form action="{{ path('review-edit', {'id': review.id}) }}" method="POST">
+			{% include 'components/errors.html.twig' %}
+			<input name="message" value="{{ review.message }}" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Message"/>
+			<select name="rating" class="block border border-grey-light w-full p-3 rounded mb-5">
+				{% for i in 1..5 %}
+					<option value="{{ i }}" {{ review.rating == i ? 'selected' : '' }}>{{ i }}</option>
+				{% endfor %}
+			</select>
+			<button type="submit" class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1">Editer</button>
+		</form>
+	{% else %}
+		<form action="{{ path('review-create', {'restaurantId': restaurant.id }) }}" method="POST">
+			{% include 'components/errors.html.twig' %}
+			<input name="message" class="block border border-grey-light w-full p-3 rounded mb-5" placeholder="Message"/>
+			<select name="rating" class="block border border-grey-light w-full p-3 rounded mb-5">
+				{% for i in 1..5 %}
+					<option value="{{ i }}">{{ i }}</option>
+				{% endfor %}
+			</select>
+			<button type="submit" class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1">Créer</button>
+		</form>
+	{% endif %}
+{% endblock %}
